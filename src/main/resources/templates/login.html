@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<!-- MEMO: update me with `git checkout gh-pages && git merge master && git push origin gh-pages` -->
+<head th:include="common/common_head :: common-head">
+</head>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    body > .container {
+        height: 100%;
+        margin-top: 80px;
+        width: 40%;
+    }
+
+    .panel-body p {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 8;
+        -webkit-box-orient: vertical;
+    }
+    a:hover{
+        cursor: pointer;
+    }
+</style>
+<body>
+<div class="container">
+    <div class="panel panel-primary">
+        <div class="panel-heading text-center" style="background-color: #146a77">
+            <h2> Login For TG System</h2>
+        </div>
+        <div class="panel-body ">
+            <div class="form-group">
+                <label for="inputUserName" class="col-md-2 control-label"><i class="fa fa-user">UserName</i></label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" id="inputUserName" placeholder="Your UserName" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword" class="col-md-2 control-label"><i class="fa fa-key">Password </i></label>
+                <div class="col-md-10">
+                    <input type="password" class="form-control" id="inputPassword" placeholder="Password" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-12">
+                    <div class="btn btn-primary center-block" onclick="login()">
+                        login<i class="fa fa-sign-in"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-footer">
+            <div class="text-center" style="margin: 0px">
+                no account? to
+                <a href="register">sign up<i class="fa fa-user-plus" aria-hidden="true"></i></a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div th:replace="common/common_footer::common-footer"></div>
+
+<div th:replace="common/common_js::common-js"></div>
+
+<script>
+    function login() {
+        var user = {
+            userName: $('#inputUserName').val(),
+            userPassword: $('#inputPassword').val()
+        };
+        $.ajax({
+            url: '/users/login',
+            type: 'POST',
+            data: user,
+            success: function (oResult) {
+                console.log(oResult);
+                if(oResult.status == "ok"){
+                    location.assign(oResult.url + "?userName=" + user.userName);
+                }
+                else {
+                    alert(oResult.errorString);
+                }
+            }
+        });
+    }
+
+</script>
+</body>
+</html>

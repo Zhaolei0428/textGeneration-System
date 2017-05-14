@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<!-- MEMO: update me with `git checkout gh-pages && git merge master && git push origin gh-pages` -->
+<head th:replace="common/common_head::common-head"></head>
+
+<style>
+    .panel-body p {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 8;
+        -webkit-box-orient: vertical;
+    }
+    .label {
+        font-weight: 500;
+        font-size: 20px;
+        display: block;
+        width: auto;
+        padding: 2px;
+        margin-top: 15px;
+        margin-bottom: 0;
+        text-align: left;
+        background:-webkit-linear-gradient(right,rgba(83, 120, 132, 0.5),rgba(83, 120, 132, 1));
+        background: linear-gradient(right,rgba(83, 120, 132, 0.5),rgba(83, 120, 132, 1));
+    }
+    .scenarios_name {
+        width: 100%;
+        font-size: 20px;
+        padding: 2px;
+    }
+
+    .text {
+        width: 100%;
+        max-width: 100%;
+    }
+
+</style>
+
+<body>
+
+<div th:replace="fragment/alt_pwd_modal::alt-pwd-modal"></div>
+
+<div th:replace="fragment/nav_bar::nav-bar"></div>
+
+
+<div  th:replace="fragment/machine_learning::machine-learning"></div>
+
+
+<div th:replace="common/common_footer::common-footer"></div>
+
+<div th:replace="common/common_js::common-js"></div>
+
+<script>
+    function machineLearning() {
+        var learning = {
+            userName: $('#userName').text(),
+            scenarioName: $('#scenarios_name option:selected').text(),
+            labels:$('#labels').val(),
+            content:$('#content').val()
+        };
+        $.ajax({
+            url: '/machineLearning',
+            type: 'POST',
+            data: learning,
+            success: function (oResult) {
+                console.log(oResult);
+                if (oResult.status == "ok") {
+                    confirm("Learning Successfully!");
+                }
+                else {
+                    confirm(oResult.errorString);
+                }
+            }
+        });
+    }
+</script>
+
+</body>
+</html>

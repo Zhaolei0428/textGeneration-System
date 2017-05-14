@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<!-- MEMO: update me with `git checkout gh-pages && git merge master && git push origin gh-pages` -->
+<head th:replace="common/common_head::common-head"></head>
+
+<style>
+
+    .panel-body {
+       font-size: large;
+    }
+
+
+</style>
+
+<body>
+
+<div th:replace="fragment/alt_pwd_modal::alt-pwd-modal"></div>
+
+<div th:replace="fragment/nav_bar::nav-bar"></div>
+
+<div th:replace="fragment/home_info::home-info"></div>
+
+<div th:replace="common/common_footer::common-footer"></div>
+
+<div th:replace="common/common_js::common-js"></div>
+
+
+
+</body>
+</html>

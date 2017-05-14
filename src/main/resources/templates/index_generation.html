@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<!-- MEMO: update me with `git checkout gh-pages && git merge master && git push origin gh-pages` -->
+<head th:replace="common/common_head::common-head"></head>
+
+<style>
+
+    .panel-body p {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 8;
+        -webkit-box-orient: vertical;
+    }
+
+    .select {
+        width: 100%;
+        font-size: 20px;
+        padding: 2px;
+        margin-bottom: 15px;
+    }
+
+    .label {
+        font-weight: 500;
+        font-size: 20px;
+        display: block;
+        width: auto;
+        padding: 2px;
+        margin-top: 15px;
+        margin-bottom: 0;
+        text-align: left;
+        background: -webkit-linear-gradient(right,rgba(83, 120, 132, 0.5),rgba(83, 120, 132, 1));
+        background: linear-gradient(right,rgba(83, 120, 132, 0.5),rgba(83, 120, 132, 1));
+    }
+    .text {
+        width: 100%;
+        max-width: 100%;
+    }
+    .content {
+        width: 100%;
+        min-height: 200px;
+        background-color: #00aa9a;
+        margin-bottom: 20px;
+        white-space: pre;
+    }
+
+</style>
+
+<body>
+
+<div th:replace="fragment/alt_pwd_modal::alt-pwd-modal"></div>
+
+<div th:replace="fragment/nav_bar::nav-bar"></div>
+
+
+<div  th:replace="fragment/text_generation::text-generation"></div>
+
+
+<div th:replace="common/common_footer::common-footer"></div>
+
+<div th:replace="common/common_js::common-js"></div>
+
+<script>
+    function text_generation() {
+        $('#content').html("加载中...");
+        var data = {
+            userName: $('#userName').text(),
+            scenarioName: $('#scenarios_name option:selected').text(),
+            framework: $('#frameworks option:selected').text(),
+            replaces: $('#replaces').val(),
+            labels:$('#labels').val()
+        };
+        $.ajax({
+            url: '/textGeneration',
+            type: 'POST',
+            data: data,
+
+            success: function (oResult) {
+                console.log(oResult);
+                    if (oResult.status == "ok") {
+                    var text = oResult.generationText;
+                    $('#content').html(text);
+                }
+                else {
+                    confirm(oResult.errorString);
+                    $('#content').html("文本会在这里生成。");
+                }
+            }
+        });
+    }
+</script>
+<script th:inline="javascript">
+    function move()
+    {
+        var frameworks = document.getElementById("frameworks");
+        var scenarioId = $('#scenarios_name option:selected').val();
+        var fms =[[${frameworks}]];
+        var sId = [[${scenarioId}]];
+        frameworks.length=0;
+        if(scenarioId != -1)
+        {
+            for(var i=0;i<fms.length;i++)
+            {
+                if(scenarioId == sId[i])
+                {
+                    var ss=new Option();
+                    ss.text=fms[i];
+                    frameworks.add(ss);
+                }
+            }
+            var ss=new Option();
+            ss.text="不用模板";
+            frameworks.add(ss);
+        }
+        else{
+            var ss=new Option();
+            ss.text="--请选择模板--";
+            frameworks.add(ss);
+        }
+    }
+</script>
+
+</body>
+</html>

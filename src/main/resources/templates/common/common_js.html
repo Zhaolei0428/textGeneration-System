@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<!-- MEMO: update me with `git checkout gh-pages && git merge master && git push origin gh-pages` -->
+
+<div th:fragment="common-js">
+    <script src="/js/jquery-1.10.2.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/ripples.min.js"></script>
+    <script src="/js/material.min.js"></script>
+    <script src="/js/snackbar.min.js"></script>
+    <script src="/js/nouislider.min.js"></script>
+    <script src="/js/editormd.min.js"></script>
+    <script src="/js/jquery-ui.min.js"></script>
+    <script>
+        $(function () {
+            $.material.init();
+        });
+    </script>
+</div>
+
+</html>

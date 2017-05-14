@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<div class="container content-body" th:fragment="machine-learning">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading" style="background-color: rgba(30, 88, 93, 0.78)">
+                            <h4 class="panel-title ">机器学习</h4>
+                        </div>
+                        <div class="panel-body">
+                            <div class="machine_learning">
+                                <label class="label" >choose a scenario first:</label>
+                                <select class="scenarios_name" id="scenarios_name" >
+                                    <option th:each="scenario,iterStat:${scenarios}" th:text="${scenario.name}">暂时为空</option>
+                                </select>
+                                <label class="label">Input the labels in this area,each label is divided by ",":</label>
+                                <textarea class="text" id="labels" rows="3"></textarea>
+                                <label class="label">Input the text in this area:</label>
+                                <textarea class="text" id="content" rows="10"></textarea>
+                                <div class="btn btn-primary center-block" onclick="machineLearning()">
+                                    Start Learning<i class="fa fa-sign-in"></i></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>

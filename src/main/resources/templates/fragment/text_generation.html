@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<div class="container" th:fragment="text-generation">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading" style="background-color: rgba(30, 88, 93, 0.78)">
+                            <h4 class="panel-title ">文本生成</h4>
+                        </div>
+                        <div class="panel-body">
+                            <div class="text_generation">
+                                <label class="label">选择一个场景：</label>
+                                <select class="select" id="scenarios_name" onchange="move()">
+                                    <option th:value="-1">--请选择场景--</option>
+                                    <option th:each="scenario,iterStat:${scenarios}" th:text="${scenario.getName()}" th:value="${scenario.getId()}"></option>
+                                </select>
+
+                                <label class="label">选择一个模板：</label>
+                                <select class="select" id="frameworks" >
+                                    <option>--请选择模板--</option>
+                                </select>
+
+                                <label class="label">请输入模板中替换内容，每个内容用","间隔，此部内容替换模板中"%s"内容：</label>
+                                <textarea class="text" id="replaces" rows="3"></textarea>
+
+                                <label class="label">请输入正文标签，每个标签用","间隔，此部分生成文本替换模板中"$$"内容：</label>
+                                <textarea class="text" id="labels" rows="3"></textarea>
+
+                                <label class="label">Text will be generated on the following:</label>
+                                <p class="content" id="content">
+                                    文本会在这里生成。
+                                </p>
+                                <div class="btn btn-primary center-block" onclick="text_generation()">
+                                    start_generation<i class="fa fa-sign-in"></i></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>

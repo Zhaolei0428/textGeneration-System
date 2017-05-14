@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<!-- MEMO: update me with `git checkout gh-pages && git merge master && git push origin gh-pages` -->
+<head th:replace="common/common_head::common-head"></head>
+
+<style>
+    .panel-body {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+    .panel-body p {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 8;
+        -webkit-box-orient: vertical;
+    }
+
+
+    fieldset{padding:.35em .625em .75em;margin:5px;border:2px solid silver}
+    legend{padding:.5em;border:0;margin: 0;width:auto;font-size: medium;color: #4cae4c}
+
+    .scenarios_name {
+        width: 100%;
+    }
+
+    .scenarios_name {
+        width: 100%;
+        font-size: 20px;
+        padding: 2px;
+        margin-bottom: 15px;
+    }
+    #inputFramework {
+        width: 100%;
+        max-width: 100%;
+    }
+    p {
+        font-weight: 500;
+        font-size: 20px;
+        color: white;
+        margin-bottom: 0;
+        margin-top: 20px;
+        background: -webkit-linear-gradient(right,rgba(83, 120, 132, 0.5),rgba(83, 120, 132, 1));
+        background: linear-gradient(right,rgba(83, 120, 132, 0.5),rgba(83, 120, 132, 1));
+    }
+    .label {
+        font-weight: 500;
+        font-size: 20px;
+        display: block;
+        width: 100%;
+        height: auto;
+        padding: 2px;
+        margin-top: 15px;
+        margin-bottom: 0;
+        text-align: left;
+        background: -webkit-linear-gradient(right,rgba(83, 120, 132, 0.5),rgba(83, 120, 132, 1));
+        background: linear-gradient(right,rgba(83, 120, 132, 0.5),rgba(83, 120, 132, 1));
+        word-wrap:break-word;
+        word-break:break-all;
+    }
+
+</style>
+
+<body>
+
+<div th:replace="fragment/alt_pwd_modal::alt-pwd-modal"></div>
+
+<div th:replace="fragment/nav_bar::nav-bar"></div>
+
+
+<div  th:replace="fragment/scenarios_manage::scenarios-manage"></div>
+
+
+<div th:replace="common/common_footer::common-footer"></div>
+
+<div th:replace="common/common_js::common-js"></div>
+
+<script>
+    function addScenario() {
+        var scenario = {
+            userName: $('#userName').text(),
+            scenarioName: $('#inputScenario').val()
+        };
+        $.ajax({
+            url: '/scenariosManage/addScenario',
+            type: 'POST',
+            data: scenario,
+            success: function (oResult) {
+                console.log(oResult);
+                if (oResult.status == "ok") {
+                    confirm("Success!");
+                    $("<option>"+scenario.scenarioName+"</option>").appendTo("#scenarios_name");
+                }
+                else {
+                    confirm(oResult.errorString);
+                }
+            }
+        });
+    }
+
+    function delScenario() {
+        var scenario = {
+            userName: $('#userName').text(),
+            scenarioName: $('#scenarios_name option:selected').text()
+        };
+        $.ajax({
+            url: '/scenariosManage/delScenario',
+            type: 'POST',
+            data: scenario,
+            success: function (oResult) {
+                console.log(oResult);
+                if (oResult.status == "ok") {
+                    $('#scenarios_name option:selected').remove();
+                    confirm("Success!");
+                }
+                else {
+                    confirm(oResult.errorString);
+                }
+            }
+        });
+    }
+
+    function addFramework() {
+        var framework = {
+            userName:$('#userName').text(),
+            scenarioName: $('#scenarios_name option:selected').text(),
+            frameworkContent: $('#inputFramework').val()
+        };
+        $.ajax({
+            url: '/scenariosManage/addFramework',
+            type: 'POST',
+            data: framework,
+            success: function (oResult) {
+                console.log(oResult);
+                if (oResult.status == "ok") {
+                    confirm("Success!");
+                }
+                else {
+                    confirm(oResult.errorString);
+                }
+            }
+        });
+    }
+
+</script>
+
+</body>
+</html>

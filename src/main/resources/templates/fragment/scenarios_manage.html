@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<div class="container content-body" th:fragment="scenarios-manage">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading" style="background-color: rgba(30, 88, 93, 0.78)">
+                            <h4 class="panel-title ">场景管理</h4>
+                        </div>
+                        <div class="panel-body">
+                            <div class="add_scenarios">
+                                <fieldset>
+                                    <legend>添加场景</legend>
+                                    <div class="col-md-12">
+                                        <input type="text" class="form-control" id="inputScenario" placeholder="Scenario Name to be added" />
+                                        <div class="btn btn-primary center-block" onclick="addScenario()">
+                                            add scenario<i class="fa fa-sign-in"></i>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+
+                            <div class="del_sce_add_pre">
+                                <fieldset>
+                                    <legend>删除场景&添加框架</legend>
+                                    <div class="col-md-12">
+                                        <label class="label">choose a scenario first!</label>
+                                        <select class="scenarios_name" id="scenarios_name" >
+                                             <option th:each="scenario,iterStat:${scenarios}" th:text="${scenario.name}">暂时为空</option>
+                                        </select>
+                                        <div class="btn btn-primary center-block" onclick="delScenario()">
+                                            delete_scenario<i class="fa fa-sign-in"></i></div>
+
+                                        <p>框架说明：可以是任何你想要的预置文本，可替换参数用“%s”代替，待生成文本用"$$"嵌在文本中。若框架中不含“$$”，默认将生成文本放在框架后面。</p>
+                                        <textarea class="text" id="inputFramework" rows="3"></textarea>
+                                        <div class="btn btn-primary center-block" onclick="addFramework()">
+                                            add_framework<i class="fa fa-sign-in"></i>
+                                        </div>
+
+                                    </div>
+                                </fieldset>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>
